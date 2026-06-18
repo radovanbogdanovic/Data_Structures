@@ -5,6 +5,7 @@ using namespace std;
 
 #include "QueueAsArrayInt.h"
 #include "StackAsArrayInt.h"
+#include <cmath>
 
 void BSTreeInt::deleteTree(BSTNodeInt* ptr)
 {
@@ -30,6 +31,28 @@ BSTNodeInt* BSTreeInt::search(int el) const
 
 void BSTreeInt::insert(int el)
 {
+	BSTNodeInt* ptr = root, * par = nullptr;
+	while (ptr != nullptr) {  // trazenje mesta za umetanje novog cvora
+		par = ptr;
+		if (ptr->isLT(el))
+			ptr = ptr->right;
+		else
+			ptr = ptr->left;
+	}
+	if (root == nullptr)    // stablo je prazno
+		root = new BSTNodeInt(el);
+	else if (par->isLT(el))
+		par->right = new BSTNodeInt(el);
+	else
+		par->left = new BSTNodeInt(el);
+	numOfElements++;
+}
+
+void BSTreeInt::add(int el)
+{
+	if (isInTree(el)) {
+		return;
+	}
 	BSTNodeInt* ptr = root, * par = nullptr;
 	while (ptr != nullptr) {  // trazenje mesta za umetanje novog cvora
 		par = ptr;
@@ -333,4 +356,99 @@ int BSTreeInt::maxLevel() const // JUN 2024
 	return maxlevel;
 }
 
+int BSTreeInt::minEvenDiff(BSTNodeInt* ptr, BSTNodeInt*& best, int& minDiff, bool& found) const // JUN 2 2024
+{
+	int zbirulevom = 0;
+	int zbirudesnom = 0;
+	int diff = 0;
+
+	if (ptr == nullptr) {
+		return 0;
+	}
+	
+	zbirulevom = minEvenDiff(ptr->left, best, minDiff, found);
+	zbirudesnom = minEvenDiff(ptr->right, best, minDiff, found);
+
+	diff = abs(zbirudesnom - zbirulevom);
+
+	if (ptr->right && ptr->left && !found) {
+		minDiff = diff;
+		best = ptr;
+		found = true;
+	}
+
+	if (ptr->right && ptr->left && diff < minDiff) {
+		minDiff = diff;
+		best = ptr;
+	}
+
+	if (ptr->getKey() % 2 == 0) {
+		return ptr->getKey() + zbirulevom + zbirudesnom;
+	}
+	else {
+		return zbirudesnom + zbirulevom;
+	} 
+}
+
+
+
+BSTNodeInt* BSTreeInt::minEvenDiff() const // JUN 2 2024
+{
+	BSTNodeInt* best = nullptr;
+	int minDiff = 0;
+	bool found = false;
+
+	minEvenDiff(root, best, minDiff, found);
+
+	return best;
+}
+
+
+void BSTreeInt::populate(int* arData, int n)
+{
+	for (int i = 0; i < n; i++) {
+		add(arData[i]);
+	}
+}
+
+int BSTreeInt::sumInterval(BSTNodeInt* ptr, int min, int max, int& sum) const // 2. kolok 2024
+{
+	if (ptr != nullptr) {
+		if (ptr->getKey() <= max && ptr->getKey() >= min) {
+			sum += ptr->getKey();
+		};
+		sumInterval(ptr->left, min, max, sum);
+		sumInterval(ptr->right, min, max, sum);
+	}
+
+
+	return sum;
+}
+
+
+int BSTreeInt::sumInterval(int min, int max) const // 2. kolok 2024
+{
+	int sum = 0;
+	sumInterval(root, min, max, sum);
+	return sum;
+}
+
+void BSTreeInt::create(int* vec, int n)
+{
+	for (int i = 0; i < n; i++) {
+		insert(vec[i]);
+	}
+}
+
+int BSTreeInt::inorderDistance(int a, int b) const
+{
+
+	if()
+	return 0;
+}
+
+int BSTreeInt::inorderDistance(BSTNodeInt* ptr, bool foundA, bool foundB, int a, int b) const
+{
+	return 0;
+}
 

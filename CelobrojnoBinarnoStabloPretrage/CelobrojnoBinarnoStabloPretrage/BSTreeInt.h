@@ -24,6 +24,7 @@ public:
 	BSTNodeInt* search(int el) const;
 
 	void insert(int el);
+	void add(int el);
 	void deleteByCopying(int el);
 	void deleteByMerging(int el);
 
@@ -41,5 +42,13 @@ public:
 	void deleteLeaves();
 	void deleteLeaves(BSTNodeInt* ptr, BSTNodeInt* ptr_parent, bool isright);
 	int maxLevel() const;
+	BSTNodeInt* minEvenDiff() const;
+	int minEvenDiff(BSTNodeInt* ptr, BSTNodeInt*& best, int& minDiff, bool& found) const;
+	void populate(int* arData, int n);
+	int sumInterval(int min, int max) const;
+	int sumInterval(BSTNodeInt* ptr, int min, int max, int& sum) const;
+	void create(int* vec, int n);
+	int inorderDistance(int a, int b) const;
+	int inorderDistance(BSTNodeInt* ptr, bool foundA, bool foundB, int a, int b) const;
 };
 
