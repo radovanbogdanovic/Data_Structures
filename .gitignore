@@ -1,0 +1,48 @@
+# Visual Studio user and cache files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.opendb
+
+# Build directories
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Oo]ut/
+[Bb]uild/
+
+# C/C++ build artifacts
+*.obj
+*.o
+*.pch
+*.pdb
+*.idb
+*.ilk
+*.iobj
+*.ipdb
+*.tlog
+*.log
+*.lastbuildstate
+*.recipe
+
+# Compiled binaries
+*.exe
+*.dll
+*.lib
+*.exp
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# OS metadata
+Thumbs.db
+Desktop.ini
+.DS_Store
