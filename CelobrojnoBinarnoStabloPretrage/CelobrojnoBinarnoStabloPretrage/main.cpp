@@ -113,3 +113,24 @@
 //
 //    return 0;
 //} MAIN 2. KOLOK 2024
+//#include "BSTreeInt.h"
+//#include <iostream>
+//using namespace std;
+//
+//int main()
+//{
+//    BSTreeInt tree;
+//    int values[] = { 10, 5, 15, 3, 8, 12, 20 };
+//    int n = sizeof(values) / sizeof(values[0]);
+//
+//    tree.create(values, n);
+//
+//    cout << "Inorder: ";
+//    tree.inorder();
+//    cout << "\nRastojanje 5-15: "
+//        << tree.inorderDistance(5, 15) << endl;
+//    cout << "Rastojanje 5-99: "
+//        << tree.inorderDistance(5, 99) << endl;
+//
+//    return 0;
+//} MAIN 2. KOLOK 2024 POPRAVNI

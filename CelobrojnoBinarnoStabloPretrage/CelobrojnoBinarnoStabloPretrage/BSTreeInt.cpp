@@ -433,22 +433,47 @@ int BSTreeInt::sumInterval(int min, int max) const // 2. kolok 2024
 	return sum;
 }
 
-void BSTreeInt::create(int* vec, int n)
+void BSTreeInt::create(int* vec, int n) // 2. KOLOK 2024 POPR
 {
 	for (int i = 0; i < n; i++) {
 		insert(vec[i]);
 	}
 }
 
-int BSTreeInt::inorderDistance(int a, int b) const
+int BSTreeInt::inorderDistance(int a, int b) const// 2. KOLOK 2024 POPR
 {
+	bool foundA = false;
+	bool foundB = false;
+	int length = 0;
+	if (a > b) {
+		int pom = a;
+		a = b;
+		b = pom;
+	}
+	inorderDistance(root, foundA, foundB, a, b, length);
+	if (foundA && foundB) {
+	return length + 1;
+	}
+	else {
+		return -1;
+	}
 
-	if()
-	return 0;
 }
 
-int BSTreeInt::inorderDistance(BSTNodeInt* ptr, bool foundA, bool foundB, int a, int b) const
+void BSTreeInt::inorderDistance(BSTNodeInt* ptr, bool& foundA, bool& foundB, int a, int b, int& length) const // 2. KOLOK 2024 POPR
 {
-	return 0;
+	if (ptr != nullptr) {
+		inorderDistance(ptr->left, foundA, foundB, a, b, length);
+		if (ptr->getKey() == a) {
+			foundA = true;
+		}
+		if (ptr->getKey() == b) {
+			foundB = true;
+		}
+		if (foundA && !foundB) {
+			length++;
+		}
+		inorderDistance(ptr->right, foundA, foundB, a, b, length);
+	}
 }
 

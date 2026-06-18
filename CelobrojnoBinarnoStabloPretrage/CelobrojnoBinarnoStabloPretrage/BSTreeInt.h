@@ -49,6 +49,6 @@ public:
 	int sumInterval(BSTNodeInt* ptr, int min, int max, int& sum) const;
 	void create(int* vec, int n);
 	int inorderDistance(int a, int b) const;
-	int inorderDistance(BSTNodeInt* ptr, bool foundA, bool foundB, int a, int b) const;
+	void inorderDistance(BSTNodeInt* ptr, bool& foundA, bool& foundB, int a, int b, int& length) const;
 };
 
