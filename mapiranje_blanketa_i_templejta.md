@@ -56,6 +56,20 @@ njegovom `.vcxproj` fajlu. Visual Studio projekat sadrzi samo
 | Oktobar 3 2025 | 3 | `int maxLevelCount()` | Fali zaseban `BTreeInt` template | BFS po nivoima je najdirektniji: za svaki nivo izbroj cvorove, zapamti maksimum. Moze i rekurzija koja puni niz brojaca po dubini. |
 | Oktobar 3 2025 | 4 | `pathGoesThroughEdge(int a, int b, int c, int d)` | `CelobrojniGraf` / `GraphAsListsInt` | `pathExists(a,b) && findEdge(b,c) && pathExists(c,d)`. Ako poteg ne postoji, odmah `false`. |
 
+## 2026
+
+Napomena o datumima:
+
+- Januarski rok je odrzan 3. marta 2026.
+- Decembarski rok je odrzan 16. januara 2026. i na sajtu je svrstan pod 2026.
+
+| Blanket | Zadatak | Trazi se | Template | Recept |
+|---|---:|---|---|---|
+| Januar 2026 | 3 | `int BSTree::sumUpThePath(BSTNode* root, int destKey)` | `CelobrojnoBinarnoStabloPretrage` / `BSTreeInt` | Iterativno prati jedinu BST putanju od prosledjenog cvora do `destKey` i sabira kljuceve posecenih cvorova. Ako kljuc ne postoji, vraca `-1`. |
+| Januar 2026 | 4 | Jedan moguci redosled sklapanja delova | `CelobrojniGraf` / `GraphAsListsInt` | Poteg ide od manjeg dela ka vecem delu u koji se ugradjuje. Kahn-ovo topolosko sortiranje vec postoji kao `topologicalOrderTravrsal()`. Ako broj obradjenih cvorova nije `nodeNum`, graf sadrzi ciklus i redosled nije moguc. |
+| Decembarski rok, 16. januar 2026 | 3 | `BSTNodeInt* maxDiffOfEvenNodes()` | `CelobrojnoBinarnoStabloPretrage` / `BSTreeInt` | Postorder rekurzija za svako podstablo vraca broj parnih cvorova. Za tekuci cvor racuna `abs(brojParnihLevo - brojParnihDesno)` i pamti cvor sa najvecom razlikom. |
+| Decembarski rok, 16. januar 2026 | 4 | `int countSafeNodes()` | `CelobrojniGraf` / `GraphAsListsInt` | DFS bojenje: neposecen, aktivan, bezbedan, nebezbedan. Aktivni cvor ponovo dostignut u DFS-u oznacava ciklus; nebezbedni su i svi cvorovi iz kojih se moze stici do ciklusa. |
+
 ## Sta jos treba da skines
 
 Za mapirane grafovske zadatke vise ne fali template. Projekat `CelobrojniGraf`

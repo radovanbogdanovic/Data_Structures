@@ -538,6 +538,121 @@ Ocekivani ispis, ako se koren nalazi na nivou `0`:
 Nivo sa najvise cvorova: 2
 ```
 
+## Januar 2026 - `sumUpThePath`
+
+Rok je odrzan 3. marta 2026.
+
+Template: `CelobrojnoBinarnoStabloPretrage`.
+
+U `public` deo `BSTreeInt.h`:
+
+```cpp
+int sumUpThePath(BSTNodeInt* root, int destKey) const;
+```
+
+`main.cpp`:
+
+```cpp
+#include "BSTreeInt.h"
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    BSTreeInt tree;
+    int values[] = { 50, 30, 70, 20, 40, 60, 80 };
+
+    for (int value : values)
+        tree.insert(value);
+
+    cout << "Suma do 40: "
+         << tree.sumUpThePath(tree.search(50), 40)
+         << endl;
+
+    cout << "Suma do 99: "
+         << tree.sumUpThePath(tree.search(50), 99)
+         << endl;
+
+    return 0;
+}
+```
+
+Ocekivani ispis:
+
+```text
+Suma do 40: 120
+Suma do 99: -1
+```
+
+Putanja do kljuca `40` je `50 -> 30 -> 40`, pa je zbir
+`50 + 30 + 40 = 120`. Ako `destKey` ne postoji u podstablu prosledjenog
+cvora, metoda vraca `-1`.
+
+## Decembarski rok 2026 - `maxDiffOfEvenNodes`
+
+Rok nazvan "Decembar" odrzan je 16. januara 2026.
+
+Template: `CelobrojnoBinarnoStabloPretrage`.
+
+U `public` deo `BSTreeInt.h`:
+
+```cpp
+BSTNodeInt* maxDiffOfEvenNodes() const;
+```
+
+Potrebna je i privatna ili zasticena rekurzivna pomocna metoda koja:
+
+- vraca broj parnih cvorova u tekucem podstablu;
+- preko referenci azurira najbolji cvor i najvecu razliku.
+
+`main.cpp`:
+
+```cpp
+#include "BSTreeInt.h"
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    BSTreeInt tree;
+    int values[] = {
+        10, 5, 20, 2, 7, 15, 30,
+        12, 18, 25, 40, 22, 27
+    };
+
+    for (int value : values)
+        tree.insert(value);
+
+    BSTNodeInt* result = tree.maxDiffOfEvenNodes();
+
+    cout << "Cvor sa najvecom razlikom: "
+         << (result != nullptr ? result->key : -1)
+         << endl;
+
+    BSTreeInt emptyTree;
+    cout << boolalpha;
+    cout << "Prazno stablo vraca nullptr: "
+         << (emptyTree.maxDiffOfEvenNodes() == nullptr)
+         << endl;
+
+    return 0;
+}
+```
+
+Ocekivani ispis:
+
+```text
+Cvor sa najvecom razlikom: 10
+Prazno stablo vraca nullptr: true
+```
+
+Kod cvora `10` levo podstablo sadrzi jedan paran cvor (`2`), a desno sest
+parnih cvorova (`20`, `30`, `12`, `18`, `40`, `22`), pa je razlika `5`.
+To je jedinstvena najveca razlika u ovom testu.
+
+Tekst blanketa ne definise koji cvor treba vratiti ako vise cvorova ima istu
+najvecu razliku. Zbog toga je test napravljen tako da nema izjednacenja.
+
 ## Grafovi
 
 Graph template je dodat u folder `CelobrojniGraf`. Odvojeno mapiranje,

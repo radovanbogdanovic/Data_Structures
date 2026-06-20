@@ -134,3 +134,32 @@
 //
 //    return 0;
 //} MAIN 2. KOLOK 2024 POPRAVNI
+//#include "BSTreeInt.h"
+//#include <iostream>
+//using namespace std;
+//
+//int main()
+//{
+//    BSTreeInt tree;
+//    int values[] = {
+//        10, 5, 20, 2, 7, 15, 30,
+//        12, 18, 25, 40, 22, 27
+//    };
+//
+//    for (int value : values)
+//        tree.insert(value);
+//
+//    BSTNodeInt* result = tree.maxDiffOfEvenNodes();
+//
+//    cout << "Cvor sa najvecom razlikom: "
+//        << (result != nullptr ? result->getKey() : -1)
+//        << endl;
+//
+//    BSTreeInt emptyTree;
+//    cout << boolalpha;
+//    cout << "Prazno stablo vraca nullptr: "
+//        << (emptyTree.maxDiffOfEvenNodes() == nullptr)
+//        << endl;
+//
+//    return 0;
+//} MAIN DECEMBAR 2026

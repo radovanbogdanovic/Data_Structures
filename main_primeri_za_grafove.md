@@ -647,3 +647,126 @@ Put 1->5 kroz 2->4: false
 
 Drugi rezultat je `false` iako put `1 -> 4 -> 5` postoji, zato sto trazeni
 poteg `2 -> 4` ne postoji.
+
+## Januar 2026 - topoloski redosled sklapanja
+
+Rok je odrzan 3. marta 2026.
+
+Template vec sadrzi potrebnu javnu metodu:
+
+```cpp
+long topologicalOrderTravrsal() const;
+```
+
+`main.cpp`:
+
+```cpp
+#include <iostream>
+using namespace std;
+
+#include "GraphInt.h"
+
+int main()
+{
+    GraphAsListsInt graph;
+
+    for (int i = 1; i <= 4; i++)
+        graph.insertNode(i);
+
+    graph.insertEdge(1, 2);
+    graph.insertEdge(2, 3);
+    graph.insertEdge(3, 4);
+
+    cout << "Redosled: ";
+    long processed = graph.topologicalOrderTravrsal();
+    cout << "Broj obradjenih: " << processed << endl;
+
+    graph.insertEdge(4, 1);
+
+    cout << "Redosled sa ciklusom: ";
+    processed = graph.topologicalOrderTravrsal();
+    cout << "Broj obradjenih: " << processed << endl;
+
+    return 0;
+}
+```
+
+Ocekivani ispis:
+
+```text
+Redosled: 1 2 3 4
+Broj obradjenih: 4
+Redosled sa ciklusom:
+Broj obradjenih: 0
+```
+
+Nakon dodavanja potega `4 -> 1`, svaki cvor ima ulazni stepen `1`, red je
+prazan od pocetka i nijedan cvor ne moze biti obradjen.
+
+Na samom kraju trenutni destruktor dodatno ispisuje `Not implemented!`; ta
+linija nije rezultat zadatka.
+
+## Decembarski rok 2026 - `countSafeNodes`
+
+Rok nazvan "Decembar" odrzan je 16. januara 2026.
+
+U `public` deo `GraphInt.h`:
+
+```cpp
+int countSafeNodes() const;
+```
+
+U `private` deo klase dodaje se pomocna DFS metoda:
+
+```cpp
+bool isSafe(LinkedNodeInt* node) const;
+```
+
+`main.cpp`:
+
+```cpp
+#include <iostream>
+using namespace std;
+
+#include "GraphInt.h"
+
+int main()
+{
+    GraphAsListsInt graph;
+
+    for (int i = 1; i <= 8; i++)
+        graph.insertNode(i);
+
+    graph.insertEdge(1, 2);
+    graph.insertEdge(2, 3);
+    graph.insertEdge(3, 2);
+
+    graph.insertEdge(4, 5);
+    graph.insertEdge(5, 6);
+
+    graph.insertEdge(8, 4);
+
+    cout << "Broj bezbednih cvorova: "
+         << graph.countSafeNodes()
+         << endl;
+
+    return 0;
+}
+```
+
+Ocekivani ispis:
+
+```text
+Broj bezbednih cvorova: 5
+```
+
+Nebezbedni su cvorovi `{1, 2, 3}`:
+
+- `2` i `3` pripadaju ciklusu;
+- iz cvora `1` moze da se stigne do tog ciklusa.
+
+Bezbedni su `{4, 5, 6, 7, 8}`. Cvor `7` je izolovan, a putanja
+`8 -> 4 -> 5 -> 6` se zavrsava i ne vodi do ciklusa.
+
+Na samom kraju trenutni destruktor dodatno ispisuje `Not implemented!`; ta
+linija nije rezultat zadatka.

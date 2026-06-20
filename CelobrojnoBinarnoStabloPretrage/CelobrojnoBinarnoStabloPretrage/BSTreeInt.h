@@ -50,5 +50,7 @@ public:
 	void create(int* vec, int n);
 	int inorderDistance(int a, int b) const;
 	void inorderDistance(BSTNodeInt* ptr, bool& foundA, bool& foundB, int a, int b, int& length) const;
+	BSTNodeInt* maxDiffOfEvenNodes() const;
+	int maxDiffOfEvenNodes(BSTNodeInt* ptr, int& max, BSTNodeInt*& rezultat) const;
 };
 

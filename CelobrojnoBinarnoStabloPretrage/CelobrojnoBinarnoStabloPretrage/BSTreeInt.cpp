@@ -477,3 +477,39 @@ void BSTreeInt::inorderDistance(BSTNodeInt* ptr, bool& foundA, bool& foundB, int
 	}
 }
 
+BSTNodeInt* BSTreeInt::maxDiffOfEvenNodes() const
+{
+	BSTNodeInt* ptr = root;
+	BSTNodeInt* rezultat = nullptr;
+	int max = 0;
+	maxDiffOfEvenNodes(ptr, max, rezultat);
+	return rezultat;
+}
+
+int BSTreeInt::maxDiffOfEvenNodes(BSTNodeInt* ptr, int& max, BSTNodeInt*& rezultat) const
+{
+	int ud = 0;
+	int ul = 0;
+	int diff = 0;
+	if (!ptr) {
+		return 0;
+	}
+
+
+	ul = maxDiffOfEvenNodes(ptr->left, max, rezultat);
+	ud = maxDiffOfEvenNodes(ptr->right, max, rezultat);
+
+	diff = abs(ul - ud);
+
+	if (max <= diff) {
+		max = diff;
+		rezultat = ptr;
+	}
+	
+
+	if (ptr->getKey() % 2 == 0) {
+		return 1 + ul + ud;
+	}
+	return ul + ud;
+}
+

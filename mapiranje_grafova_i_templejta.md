@@ -1,7 +1,7 @@
 # Mapiranje grafovskih blanketa i template-a
 
 Fokus: samo programski zadaci iz grafova sa pismenih ispita i P2
-kolokvijuma iz 2024. i 2025. godine.
+kolokvijuma iz 2024, 2025. i 2026. godine.
 
 Kompletni `main.cpp` primeri i ocekivani rezultati nalaze se u:
 [`main_primeri_za_grafove.md`](main_primeri_za_grafove.md).
@@ -403,6 +403,76 @@ pathExists(findNode(c), findNode(d))
 Ako poteg `b -> c` ne postoji, odmah se vraca `false`. Statusi se resetuju
 izmedju dva obilaska.
 
+## Januar 2026 - topoloski redosled sklapanja
+
+Rok je odrzan 3. marta 2026.
+
+Tekst zadatka ne zadaje novi potpis metode, vec trazi da se napravi jedan
+moguci redosled sklapanja delova. U datom template-u vec postoji:
+
+```cpp
+long topologicalOrderTravrsal() const;
+```
+
+Poteg `u -> v` znaci da manji deo `u` mora biti sklopljen pre veceg dela `v`
+u koji se ugradjuje.
+
+Postojeca metoda koristi Kahn-ov algoritam:
+
+1. `status` svakog cvora postavlja na njegov ulazni stepen.
+2. U red stavlja sve cvorove sa ulaznim stepenom `0`.
+3. Skida cvor, stampa ga i smanjuje ulazne stepene njegovih suseda.
+4. Vraca broj obradjenih cvorova.
+
+Ako je povratna vrednost jednaka `nodeNum`, odstampan je ispravan redosled.
+Ako je manja, graf sadrzi ciklus i nije moguce napraviti redosled koji
+postuje sve zavisnosti.
+
+Koriste se `start`, `nodeNum`, `adj`, `status` i
+`QueueAsArrayLinkedNodeInt`.
+
+## Decembarski rok 2026 - `countSafeNodes`
+
+Rok nazvan "Decembar" odrzan je 16. januara 2026.
+
+Originalni i prilagodjeni potpis:
+
+```cpp
+int countSafeNodes() const;
+```
+
+Cvor je bezbedan ako se iz njega ne moze stici ni do jednog ciklusa.
+Nije dovoljno proveriti samo da li se sam cvor nalazi u ciklusu: nebezbedan
+je i svaki cvor koji vodi ka ciklusu.
+
+Predlozena znacenja polja `status`:
+
+```text
+0 = neposecen
+1 = aktivan u trenutnoj DFS putanji
+2 = dokazano bezbedan
+3 = dokazano nebezbedan
+```
+
+Privatna pomocna metoda:
+
+```cpp
+bool isSafe(LinkedNodeInt* node) const;
+```
+
+DFS pravila:
+
+1. Ako je `status == 1`, pronadjen je povratni poteg i rezultat je `false`.
+2. Ako je cvor vec `2` ili `3`, vratiti zapamceni rezultat.
+3. Oznaciti cvor kao aktivan i rekurzivno proveriti sve izlazne susede.
+4. Ako je bilo koji sused nebezbedan, oznaciti i tekuci cvor sa `3`.
+5. Ako su svi susedi bezbedni, oznaciti tekuci cvor sa `2`.
+6. `countSafeNodes` resetuje statuse, poziva `isSafe` za svaki cvor i broji
+   rezultate `true`.
+
+Slozenost je `O(V + E)`, jer se stanje svakog cvora konacno odredjuje samo
+jednom.
+
 ## Redosled za vezbanje
 
 1. `ensureEdgeExists`, `ensureUndirectedEdge`, `pathExists`.
@@ -412,3 +482,4 @@ izmedju dva obilaska.
 5. `printMaxConnectedComponentNodes`.
 6. `arePathsPossible`.
 7. `Save` i `Load`.
+8. `countSafeNodes`.
