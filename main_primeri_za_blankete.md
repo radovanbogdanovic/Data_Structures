@@ -540,15 +540,8 @@ Nivo sa najvise cvorova: 2
 
 ## Grafovi
 
-Za grafovske zadatke jos ne treba uciti napamet izmisljeni `main`, jer u
-folderu nema grafovskog template-a. Konstrukcija grafa zavisi od stvarnih
-metoda kao sto su `insertNode`, `insertEdge`, `findNode` i od toga da li je graf
-usmeren ili tezinski.
+Graph template je dodat u folder `CelobrojniGraf`. Odvojeno mapiranje,
+deklaracije, kompletni `main.cpp` testovi i ocekivani rezultati nalaze se u:
 
-Kada se doda graph template, za svaki mapirani grafovski zadatak treba dopisati:
-
-1. tacnu deklaraciju u klasi;
-2. formiranje malog grafa od 5-7 cvorova;
-3. pozitivan test gde put postoji;
-4. negativan test gde put ne postoji;
-5. ispis povratne vrednosti ili pronadjenog puta.
+- [`mapiranje_grafova_i_templejta.md`](mapiranje_grafova_i_templejta.md)
+- [`main_primeri_za_grafove.md`](main_primeri_za_grafove.md)
