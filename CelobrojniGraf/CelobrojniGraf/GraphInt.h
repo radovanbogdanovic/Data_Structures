@@ -51,5 +51,7 @@ public:
 	void ensureEdgeExists(int b, int c);
 	LinkedNodeInt* FindStation(int s, int g1, int g2, int& noInter);
 	bool pathGoesThrough(int a, int b, int c);
+	bool pathThroughEdgeExists(int a, int b, int c, int d);
+
 };
 

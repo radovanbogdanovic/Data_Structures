@@ -206,25 +206,56 @@
 //
 //    return 0;
 //} April 2025
+//#include "BSTreeInt.h"
+//#include <iostream>
+//using namespace std;
+//
+//int main()
+//{
+//    BSTreeInt tree;
+//    int values[] = { 10, 5, 16, 3, 8, 14, 20, 7 };
+//
+//    for (int value : values)
+//        tree.insert(value);
+//
+//    BSTNodeInt* result =
+//        tree.getDeepestEvenParent(tree.search(10));
+//
+//    if (result != nullptr)
+//        cout << "Najdublji paran roditelj: " << result->key << endl;
+//    else
+//        cout << "Takav cvor ne postoji." << endl;
+//
+//    return 0;
+//} oktrobar2 2025
 #include "BSTreeInt.h"
 #include <iostream>
 using namespace std;
 
+class TestBTreeInt : public BSTreeInt
+{
+public:
+    void makeExample()
+    {
+        root = new BSTNodeInt(10);
+        root->left = new BSTNodeInt(5);
+        root->right = new BSTNodeInt(15);
+        root->left->left = new BSTNodeInt(3);
+        root->left->right = new BSTNodeInt(8);
+        root->right->left = new BSTNodeInt(12);
+        root->right->right = new BSTNodeInt(20);
+        numOfElements = 7;
+    }
+};
+
 int main()
 {
-    BSTreeInt tree;
-    int values[] = { 10, 5, 16, 3, 8, 14, 20, 7 };
+    TestBTreeInt tree;
+    tree.makeExample();
 
-    for (int value : values)
-        tree.insert(value);
-
-    BSTNodeInt* result =
-        tree.getDeepestEvenParent(tree.search(10));
-
-    if (result != nullptr)
-        cout << "Najdublji paran roditelj: " << result->key << endl;
-    else
-        cout << "Takav cvor ne postoji." << endl;
+    tree.breadthFirstSearch();
+    cout << "\nNivo sa najvise cvorova: "
+        << tree.maxLevelCount() << endl;
 
     return 0;
 }

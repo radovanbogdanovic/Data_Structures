@@ -625,6 +625,34 @@
 //    return 0;
 //
 //} april 2025
+//#include <iostream>
+//using namespace std;
+//
+//#include "GraphInt.h"
+//
+//int main()
+//{
+//    GraphAsListsInt graph;
+//
+//    for (int i = 1; i <= 6; i++)
+//        graph.insertNode(i);
+//
+//    graph.insertEdge(1, 2);
+//    graph.insertEdge(2, 3);
+//    graph.insertEdge(3, 4);
+//    graph.insertEdge(1, 5);
+//    graph.insertEdge(5, 4);
+//
+//    cout << boolalpha;
+//    cout << "Put 1->4 kroz 2: "
+//        << graph.pathGoesThrough(1, 2, 4)
+//        << endl;
+//    cout << "Put 1->4 kroz 6: "
+//        << graph.pathGoesThrough(1, 6, 4)
+//        << endl;
+//
+//    return 0;
+//} oktobar 2 2025
 #include <iostream>
 using namespace std;
 
@@ -634,21 +662,21 @@ int main()
 {
     GraphAsListsInt graph;
 
-    for (int i = 1; i <= 6; i++)
+    for (int i = 1; i <= 5; i++)
         graph.insertNode(i);
 
     graph.insertEdge(1, 2);
     graph.insertEdge(2, 3);
-    graph.insertEdge(3, 4);
-    graph.insertEdge(1, 5);
-    graph.insertEdge(5, 4);
+    graph.insertEdge(3, 5);
+    graph.insertEdge(1, 4);
+    graph.insertEdge(4, 5);
 
     cout << boolalpha;
-    cout << "Put 1->4 kroz 2: "
-        << graph.pathGoesThrough(1, 2, 4)
+    cout << "Put 1->5 kroz 2->3: "
+        << graph.pathThroughEdgeExists(1, 2, 3, 5)
         << endl;
-    cout << "Put 1->4 kroz 6: "
-        << graph.pathGoesThrough(1, 6, 4)
+    cout << "Put 1->5 kroz 2->4: "
+        << graph.pathThroughEdgeExists(1, 2, 4, 5)
         << endl;
 
     return 0;

@@ -46,7 +46,7 @@ public:
 	int minEvenDiff(BSTNodeInt* ptr, BSTNodeInt*& best, int& minDiff, bool& found) const;
 	void populate(int* arData, int n);
 	int sumInterval(int min, int max) const;
-	int sumInterval(BSTNodeInt* ptr, int min, int max, int& sum) const;
+	void sumInterval(BSTNodeInt* ptr, int min, int max, int& sum) const;
 	void create(int* vec, int n);
 	int inorderDistance(int a, int b) const;
 	void inorderDistance(BSTNodeInt* ptr, bool& foundA, bool& foundB, int a, int b, int& length) const;
@@ -58,5 +58,6 @@ public:
 	void findDeepestLeaf(BSTNodeInt* ptr, BSTNodeInt*& rez, int& depth, int& maxdepth) const;
 	BSTNodeInt* getDeepestEvenParent(BSTNodeInt* root);
 	void getDeepestEvenParent(BSTNodeInt* root, BSTNodeInt*& rez);
+	int maxLevelCount();
 };
 

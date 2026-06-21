@@ -780,3 +780,73 @@ bool GraphAsListsInt::pathGoesThrough(int a, int b, int c)
 
 	return existsb && existsc;
 }
+
+bool GraphAsListsInt::pathThroughEdgeExists(int a, int b, int c, int d)
+{
+	ensureEdgeExists(d, b);
+	setStatusForAllNodes(1);
+	StackAsArrayLinkedNodeInt s(nodeNum);
+	LinkedNodeInt* start = findNode(a);
+	LinkedNodeInt* ptr = nullptr;
+	LinkedEdgeInt* adj = nullptr;
+	bool mozec = false;
+	bool mozecd = false;
+	bool mozedb = false;
+	s.push(start);
+	start->status = 2;
+	while (!s.isEmpty()) {
+		ptr = s.pop();
+		if (ptr->node == c) {
+			mozec = true;
+			start = ptr;
+		}
+		adj = ptr->adj;
+		ptr->status = 3;
+		while (adj) {
+			if (adj->dest->status == 1) {
+				s.push(adj->dest);
+				adj->dest->status = 2;
+			}
+
+			adj = adj->link;
+		}
+	}
+	if (!mozec) {
+		return false;
+	}
+	else {
+		adj = start->adj;
+		while (adj) {
+			if (adj->dest->node == d) {
+				mozecd = true;
+				start = adj->dest;
+			}
+			adj = adj->link;
+		}
+	}
+
+	if (!mozecd) {
+		return false;
+	}
+	setStatusForAllNodes(1);
+	s.push(start);
+	start->status = 2;
+	while (!s.isEmpty()) {
+		ptr = s.pop();
+		if (ptr->node == b) {
+			mozedb = true;
+		}
+		adj = ptr->adj;
+		ptr->status = 3;
+		while (adj) {
+			if (adj->dest->status == 1) {
+				s.push(adj->dest);
+				adj->dest->status = 2;
+			}
+
+			adj = adj->link;
+		}
+	}
+
+	return mozec && mozecd && mozedb;
+}

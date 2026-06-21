@@ -411,7 +411,7 @@ void BSTreeInt::populate(int* arData, int n)
 	}
 }
 
-int BSTreeInt::sumInterval(BSTNodeInt* ptr, int min, int max, int& sum) const // 2. kolok 2024
+void BSTreeInt::sumInterval(BSTNodeInt* ptr, int min, int max, int& sum) const // 2. kolok 2024
 {
 	if (ptr != nullptr) {
 		if (ptr->getKey() <= max && ptr->getKey() >= min) {
@@ -421,8 +421,6 @@ int BSTreeInt::sumInterval(BSTNodeInt* ptr, int min, int max, int& sum) const //
 		sumInterval(ptr->right, min, max, sum);
 	}
 
-
-	return sum;
 }
 
 
@@ -600,7 +598,7 @@ void BSTreeInt::findDeepestLeaf(BSTNodeInt* ptr, BSTNodeInt*& rez, int& depth, i
 BSTNodeInt* BSTreeInt::getDeepestEvenParent(BSTNodeInt* root)
 {
 	BSTNodeInt* rez = nullptr;
-	if (root == nullptr || root->getKey() % 2 == 1 || (root->right == nullptr && root->left == nullptr)) {
+	if (root == nullptr || (root->right == nullptr && root->left == nullptr)) {
 		return nullptr;
 	}
 	getDeepestEvenParent(root, rez);
@@ -640,6 +638,42 @@ void BSTreeInt::getDeepestEvenParent(BSTNodeInt* root, BSTNodeInt*& rez)
 		nodesinnextlevel = 0;
 	}
 
+}
+
+int BSTreeInt::maxLevelCount()
+{
+	QueueAsArrayBSTNodeInt q(numOfElements);
+	BSTNodeInt* ptr = nullptr;
+	q.enqueue(root);
+	int nodesincurrent = 1;
+	int nodesinnext = 0;
+	int level = 0;
+	int maxlevel = 0;
+	int maxnodes = 0;
+	while (!q.isEmpty()) {
+		for (int i = 0; i < nodesincurrent; i++) {
+			ptr = q.dequeue();
+			if (nodesincurrent > maxnodes) {
+				maxlevel = level;
+				maxnodes = nodesincurrent;
+			}
+
+			if (ptr->left) {
+				q.enqueue(ptr->left);
+				nodesinnext++;
+			}
+			if (ptr->right) {
+				q.enqueue(ptr->right);
+				nodesinnext++;
+			}
+		}
+		nodesincurrent = nodesinnext;
+		nodesinnext = 0;
+		level++;
+	}
+
+
+	return maxlevel;
 }
 
 
