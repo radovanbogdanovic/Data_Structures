@@ -31,4 +31,4 @@ LinkedNodeInt::LinkedNodeInt(int nodeN, LinkedEdgeInt* adjN, LinkedNodeInt* next
 void LinkedNodeInt::visit()
 {
 	cout << node << " ";
-}
+ }

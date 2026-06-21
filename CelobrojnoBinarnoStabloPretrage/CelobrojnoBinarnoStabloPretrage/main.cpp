@@ -163,3 +163,68 @@
 //
 //    return 0;
 //} MAIN DECEMBAR 2026
+//#include "BSTreeInt.h"
+//#include <iostream>
+//using namespace std;
+//
+//int main()
+//{
+//    BSTreeInt tree;
+//    int values[] = { 50, 30, 70, 20, 40, 60, 80 };
+//
+//    for (int value : values)
+//        tree.insert(value);
+//
+//    cout << "Suma do 40: "
+//        << tree.sumUpThePath(tree.search(50), 40)
+//        << endl;
+//
+//    cout << "Suma do 99: "
+//        << tree.sumUpThePath(tree.search(50), 99)
+//        << endl;
+//
+//    return 0;
+//} MAIN JANUAR 2026
+//#include "BSTreeInt.h"
+//#include <iostream>
+//using namespace std;
+//
+//int main()
+//{
+//    BSTreeInt tree;
+//    int values[] = { 10, 5, 15, 3, 8, 2, 1 };
+//
+//    for (int value : values)
+//        tree.insert(value);
+//
+//    BSTNodeInt* result = tree.findDeepestLeaf(tree.search(10));
+//
+//    if (result != nullptr)
+//        cout << "Najdublji list: " << result->key << endl;
+//    else
+//        cout << "Stablo je prazno." << endl;
+//
+//    return 0;
+//} April 2025
+#include "BSTreeInt.h"
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    BSTreeInt tree;
+    int values[] = { 10, 5, 16, 3, 8, 14, 20, 7 };
+
+    for (int value : values)
+        tree.insert(value);
+
+    BSTNodeInt* result =
+        tree.getDeepestEvenParent(tree.search(10));
+
+    if (result != nullptr)
+        cout << "Najdublji paran roditelj: " << result->key << endl;
+    else
+        cout << "Takav cvor ne postoji." << endl;
+
+    return 0;
+}

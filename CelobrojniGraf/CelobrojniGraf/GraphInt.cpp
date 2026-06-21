@@ -260,45 +260,6 @@ long GraphAsListsInt::depthFirstTraversalRecursive(const int& data) const
 	return depthFirstTraversalRecursive(pNode);
 }
 
-long GraphAsListsInt::topologicalOrderTravrsal() const
-{
-	int retVal = 0;
-
-	setStatusForAllNodes(0);
-
-	LinkedNodeInt* ptr = start;
-	while (ptr != nullptr) {
-		LinkedEdgeInt* pEdge = ptr->adj;
-		while (pEdge != nullptr) {
-			pEdge->dest->status += 1;
-			pEdge = pEdge->link;
-		}
-		ptr = ptr->next;
-	}
-
-	QueueAsArrayLinkedNodeInt queue(nodeNum);
-	ptr = start;
-	while (ptr != nullptr) {
-		if (ptr->status == 0)
-			queue.enqueue(ptr);
-		ptr = ptr->next;
-	}
-
-	while (!queue.isEmpty()) {
-		ptr = queue.dequeue();
-		ptr->visit();
-		retVal += 1;
-		LinkedEdgeInt* pEdge = ptr->adj;
-		while (pEdge != nullptr) {
-			pEdge->dest->status--;
-			if (pEdge->dest->status == 0)
-				queue.enqueue(pEdge->dest);
-			pEdge = pEdge->link;
-		}
-	}
-	cout << endl;
-	return retVal;
-}
 
 bool GraphAsListsInt::arePathsPossible(LinkedNodeInt* start, LinkedNodeInt* goal1, LinkedNodeInt* goal2, LinkedNodeInt* mid) const
 {
@@ -538,6 +499,284 @@ int* GraphAsListsInt::defineOrder(int* dep, int n)
 	}
 }
 
+int GraphAsListsInt::countSafeNodes() const
+{
+	setStatusForAllNodes(0);
+	int count = 0;
+	LinkedNodeInt* ptr = start;
+	while (ptr) {
+		if (isSafe(ptr)) {
+			count++;
+		}
+
+		ptr = ptr->next;
+	}
+
+	return count;
+}
+
+bool GraphAsListsInt::isSafe(LinkedNodeInt* ptr) const
+{
+	//status: 1 - na putu, 2 - safe, 3 - unsafe
+	if (ptr->status == 1) {
+		return false;
+	}
+	if (ptr->status == 2) {
+		return true;
+	}
+	if (ptr->status == 3) {
+		return false;
+	}
+	
+	ptr->status = 1;
+	LinkedEdgeInt* adj = ptr->adj;
+	while (adj) {
+		if (!isSafe(adj->dest)) {
+			ptr->status = 3;
+			return false;
+		}
+		adj = adj->link;
+	}
+
+	ptr->status = 2;
+	return true;
+
+}
+
+long GraphAsListsInt::topologicalOrderTravrsal() const
+{
+	
+	LinkedNodeInt* ptr = start;
+	LinkedEdgeInt* adj = nullptr;
+	QueueAsArrayLinkedNodeInt q(nodeNum);
+	int rez = 0;
+	setStatusForAllNodes(0);
+	while (ptr) {
+		adj = ptr->adj;
+
+		while (adj) {
+			adj->dest->status++;
+			adj = adj->link;
+		}
+	
+		ptr = ptr->next;
+	}
+
+	ptr = start;
+
+	while (ptr) {
+		if (ptr->status == 0) {
+			q.enqueue(ptr);
+		}
+
+		ptr = ptr->next;
+	}
+
+	while (!q.isEmpty()) {
+		ptr = q.dequeue();
+		adj = ptr->adj;
+		ptr->visit();
+		rez++;
+		while (adj) {
+			adj->dest->status--;
+			if (adj->dest->status == 0) {
+				q.enqueue(adj->dest);
+			}
+			adj = adj->link;
+		}
+		
+		
+	}
+
+	return rez;
+}
+
+int GraphAsListsInt::whichOneIsCloser(int a, int b, int c) const
+{
+	LinkedNodeInt* ptr = findNode(a);
+	if (ptr) {
+		LinkedEdgeInt* adj = nullptr;
+		LinkedNodeInt* ptrb = nullptr;
+		LinkedNodeInt* ptrc = nullptr;
+		bool foundb = false;
+		bool foundc = false;
+		int pathb = 0;
+		int pathc = 0;
+		QueueAsArrayLinkedNodeInt q(nodeNum);
+		setStatusForAllNodes(1);
+		q.enqueue(ptr);
+		ptr->prev = nullptr;
+		ptr->status = 2;
+		while (!q.isEmpty()) {
+			ptr = q.dequeue();
+			adj = ptr->adj;
+			ptr->status = 3;
+			while (adj) {
+				if (adj->dest->status == 1) {
+					q.enqueue(adj->dest);
+					adj->dest->status = 2;
+					adj->dest->prev = ptr;
+				}
+				if (adj->dest->node == b && !foundb) {
+					ptrb = adj->dest;
+					foundb = true;
+				}
+				else if (adj->dest->node == c && !foundc) {
+					ptrc = adj->dest;
+					foundc = true;
+				}
+				adj = adj->link;
+			}
+
+		}
+		while (ptrb) {
+			pathb++;
+			ptrb = ptrb->prev;
+		}
+		while (ptrc) {
+			pathc++;
+			ptrc = ptrc->prev;
+		}
+		if (pathb < pathc) {
+			return b;
+		}
+		else if (pathb > pathc){
+			return c;
+		}
+		else {
+			return b;
+		}
+	}
+	return -1;
+}
+
+void GraphAsListsInt::ensureEdgeExists(int b, int c)
+{
+	if (findNode(b) && findNode(c)) {
+		if (!findEdge(b, c) && !findEdge(c, b)) {
+			insertEdge(b, c);
+		}
+	}
+}
+
+LinkedNodeInt* GraphAsListsInt::FindStation(int s, int g1, int g2, int& noInter)
+{
+	//status 1 - neobradjen, 2 - u q, 3 - obradjen
+	setStatusForAllNodes(1);
+	LinkedNodeInt* start1 = findNode(s);
+	LinkedNodeInt* ptr = nullptr;
+	LinkedEdgeInt* adj = nullptr;
+	LinkedNodeInt* pg1 = nullptr;
+	LinkedNodeInt* pg2 = nullptr;
+	int nointer1 = 0;
+	int nointer2 = 0;
+	QueueAsArrayLinkedNodeInt q(nodeNum);
+	q.enqueue(start1);
+	start1->status = 2;
+	start1->prev = nullptr;
+	while (!q.isEmpty()) {
+		ptr = q.dequeue();
+		if (ptr->node == g1) {
+			pg1 = ptr;
+		}
+		if (ptr->node == g2) {
+			pg2 = ptr;
+		}
+		adj = ptr->adj;
+		ptr->status = 3;
+		while (adj) {
+			if (adj->dest->status == 1) {
+				q.enqueue(adj->dest);
+				adj->dest->status = 2;
+				adj->dest->prev = ptr;
+			}
+			adj = adj->link;
+		}
+	}
+	if (pg1 && pg2) {
+		ptr = pg1;
+		while (ptr->prev != nullptr) {
+			nointer1++;
+			ptr = ptr->prev;
+		}
+		ptr = pg2;
+		while (ptr->prev != nullptr) {
+			nointer2++;
+			ptr = ptr->prev;
+		}
+
+		if (nointer2 < nointer1) {
+			noInter = nointer2 - 1;
+			return pg2;
+		}
+		else {
+			noInter = nointer1 - 1;
+			return pg1;
+		}
+	}
+	noInter = -1;
+	return nullptr;
+}
+
+bool GraphAsListsInt::pathGoesThrough(int a, int b, int c)
+{
+	//status: 1 - neobradjen, 2 - ubacen na stek, 3 - obradjen
+	StackAsArrayLinkedNodeInt q(nodeNum);
+	LinkedNodeInt* start = findNode(a);
+	if (!start) {
+		return false;
+	}
+	LinkedNodeInt* ptr = nullptr;
+	LinkedEdgeInt* adj = nullptr;
+	bool existsb = false;
+	bool existsc = false;
+	q.push(start);
+	setStatusForAllNodes(1);
+	start->status = 2;
+	while (!q.isEmpty())
+	{
+		ptr = q.pop();
+		if (ptr->node == b) {
+			existsb = true;
+			start = ptr;
+		}
+
+		adj = ptr->adj;
+		ptr->status = 3;
+		while (adj) {
+			if (adj->dest->status == 1) {
+				q.push(adj->dest);
+				adj->dest->status = 2;
+			}
+			adj = adj->link;
+		}
+	}
+	if (!existsb) {
+		return false;
+	}
+	q.push(start);
+	setStatusForAllNodes(1);
+	start->status = 2;
+	while (!q.isEmpty())
+	{
+		ptr = q.pop();
+		if (ptr->node == c) {
+			existsc = true;
+		}
+
+		adj = ptr->adj;
+		ptr->status = 3;
+		while (adj) {
+			if (adj->dest->status == 1) {
+				q.push(adj->dest);
+				adj->dest->status = 2;
+			}
+			adj = adj->link;
+		}
+	}
 
 
+		
 
+	return existsb && existsc;
+}

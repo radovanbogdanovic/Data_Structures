@@ -52,5 +52,11 @@ public:
 	void inorderDistance(BSTNodeInt* ptr, bool& foundA, bool& foundB, int a, int b, int& length) const;
 	BSTNodeInt* maxDiffOfEvenNodes() const;
 	int maxDiffOfEvenNodes(BSTNodeInt* ptr, int& max, BSTNodeInt*& rezultat) const;
+	int sumUpThePath(BSTNodeInt* root, int destKey);
+	int sumUpThePath(BSTNodeInt* ptr1, int destKey, int& sum);
+	BSTNodeInt* findDeepestLeaf(BSTNodeInt* root) const;
+	void findDeepestLeaf(BSTNodeInt* ptr, BSTNodeInt*& rez, int& depth, int& maxdepth) const;
+	BSTNodeInt* getDeepestEvenParent(BSTNodeInt* root);
+	void getDeepestEvenParent(BSTNodeInt* root, BSTNodeInt*& rez);
 };
 

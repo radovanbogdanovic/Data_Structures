@@ -499,3 +499,157 @@
 //
 //    return 0;
 //} Jun2 2024
+//#include <iostream>
+//using namespace std;
+//
+//#include "GraphInt.h"
+//
+//int main()
+//{
+//    GraphAsListsInt graph;
+//
+//    for (int i = 1; i <= 8; i++)
+//        graph.insertNode(i);
+//
+//    graph.insertEdge(1, 2);
+//    graph.insertEdge(2, 3);
+//    graph.insertEdge(3, 2);
+//
+//    graph.insertEdge(4, 5);
+//    graph.insertEdge(5, 6);
+//
+//    graph.insertEdge(8, 4);
+//
+//    cout << "Broj bezbednih cvorova: "
+//        << graph.countSafeNodes()
+//        << endl;
+//
+//    return 0;
+//} decembar 2026
+//#include <iostream>
+//using namespace std;
+//
+//#include "GraphInt.h"
+//
+//int main()
+//{
+//    GraphAsListsInt graph;
+//
+//    for (int i = 1; i <= 4; i++)
+//        graph.insertNode(i);
+//
+//    graph.insertEdge(1, 2);
+//    graph.insertEdge(2, 3);
+//    graph.insertEdge(3, 4);
+//
+//    cout << "Redosled: ";
+//    long processed = graph.topologicalOrderTravrsal();
+//    cout << "Broj obradjenih: " << processed << endl;
+//
+//    graph.insertEdge(4, 1);
+//
+//    cout << "Redosled sa ciklusom: ";
+//    processed = graph.topologicalOrderTravrsal();
+//    cout << "Broj obradjenih: " << processed << endl;
+//
+//    return 0;
+//} januar 2026
+//#include <iostream>
+//using namespace std;
+//
+//#include "GraphInt.h"
+//
+//int main()
+//{
+//    GraphAsListsInt graph;
+//
+//    for (int i = 1; i <= 6; i++)
+//        graph.insertNode(i);
+//
+//    graph.insertEdge(1, 2);
+//    graph.insertEdge(2, 4);
+//    graph.insertEdge(1, 3);
+//    graph.insertEdge(3, 5);
+//    graph.insertEdge(5, 6);
+//
+//    int closer = graph.whichOneIsCloser(1, 4, 6);
+//    int farther = closer == 4 ? 6 : 4;
+//
+//    cout << "Blizi cvor: " << closer << endl;
+//    cout << boolalpha;
+//    cout << "Poteg pre: "
+//        << (graph.findEdge(closer, farther) != nullptr)
+//        << endl;
+//
+//    graph.ensureEdgeExists(closer, farther);
+//
+//    cout << "Poteg posle: "
+//        << (graph.findEdge(closer, farther) != nullptr)
+//        << endl;
+//
+//    return 0;
+//}
+//#include <iostream>
+//using namespace std;
+//
+//#include "GraphInt.h"
+//
+//int main()
+//{
+//    GraphAsListsInt graph;
+//
+//    for (int i = 1; i <= 7; i++)
+//        graph.insertNode(i);
+//
+//    graph.insertEdge(1, 2);
+//    graph.insertEdge(2, 3);
+//    graph.insertEdge(3, 4);
+//    graph.insertEdge(1, 5);
+//    graph.insertEdge(5, 6);
+//
+//    int noInter = -1;
+//    LinkedNodeInt* station =
+//        graph.FindStation(1, 4, 6, noInter);
+//
+//    cout << "Bliza stanica: "
+//        << (station != nullptr ? station->node : -1)
+//        << endl;
+//    cout << "Broj medjustanica: " << noInter << endl;
+//
+//    station = graph.FindStation(7, 4, 6, noInter);
+//    cout << boolalpha;
+//    cout << "Nedostupan cilj: "
+//        << (station == nullptr) << endl;
+//    cout << "Broj medjustanica: " << noInter << endl;
+//
+//    return 0;
+//
+//} april 2025
+#include <iostream>
+using namespace std;
+
+#include "GraphInt.h"
+
+int main()
+{
+    GraphAsListsInt graph;
+
+    for (int i = 1; i <= 6; i++)
+        graph.insertNode(i);
+
+    graph.insertEdge(1, 2);
+    graph.insertEdge(2, 3);
+    graph.insertEdge(3, 4);
+    graph.insertEdge(1, 5);
+    graph.insertEdge(5, 4);
+
+    cout << boolalpha;
+    cout << "Put 1->4 kroz 2: "
+        << graph.pathGoesThrough(1, 2, 4)
+        << endl;
+    cout << "Put 1->4 kroz 6: "
+        << graph.pathGoesThrough(1, 6, 4)
+        << endl;
+
+    return 0;
+}

@@ -513,3 +513,133 @@ int BSTreeInt::maxDiffOfEvenNodes(BSTNodeInt* ptr, int& max, BSTNodeInt*& rezult
 	return ul + ud;
 }
 
+int BSTreeInt::sumUpThePath(BSTNodeInt* root, int destKey)
+{
+	BSTNodeInt* ptr = root;
+	int sum = 0;
+	if (!ptr) {
+		return -1;
+	}
+	sumUpThePath(root, destKey, sum);
+	return sum;
+
+
+}
+
+int BSTreeInt::sumUpThePath(BSTNodeInt* ptr1, int destKey, int& sum)
+{
+	BSTNodeInt* ptr = ptr1;
+
+	sum += ptr->getKey();
+
+	if (destKey == ptr->getKey()) {
+		return sum;
+	}
+	if (ptr->right && destKey > ptr->getKey()) {
+		sumUpThePath(ptr->right, destKey, sum);
+	}
+	if (ptr->left && destKey < ptr->getKey()) {
+		sumUpThePath(ptr->left, destKey, sum);
+	}
+	if (destKey > ptr->getKey() && !ptr->right) {
+		sum = -1;
+	}
+	if (destKey < ptr->getKey() && !ptr->left) {
+		sum = -1;
+	}
+	
+
+}
+
+BSTNodeInt* BSTreeInt::findDeepestLeaf(BSTNodeInt* root) const
+{
+	if (!root) {
+	return nullptr;
+	}
+	BSTNodeInt* rez = nullptr;
+	int depth = 0;
+	int maxdepth = 0;
+	findDeepestLeaf(root, rez, depth, maxdepth);
+
+	return rez;
+
+}
+
+
+void BSTreeInt::findDeepestLeaf(BSTNodeInt* ptr, BSTNodeInt*& rez, int& depth, int& maxdepth) const
+{
+	QueueAsArrayBSTNodeInt q(numOfElements);
+	BSTNodeInt* a = nullptr;
+	q.enqueue(ptr);
+	int elincurrent = 1;
+	int elinnext = 0;
+	while (!q.isEmpty()) {
+		for (int i = 0; i < elincurrent; i++) {
+			a = q.dequeue();
+
+			if (a->left) {
+				elinnext++;
+				q.enqueue(a->left);
+			}
+			if (a->right) {
+				elinnext++;
+				q.enqueue(a->right);
+			}
+			if (!a->right && !a->left && depth>=maxdepth) {
+				maxdepth = depth;
+				rez = a;
+			}
+		}
+		elincurrent = elinnext;
+		elinnext = 0;
+		depth++;
+
+	}
+}
+
+BSTNodeInt* BSTreeInt::getDeepestEvenParent(BSTNodeInt* root)
+{
+	BSTNodeInt* rez = nullptr;
+	if (root == nullptr || root->getKey() % 2 == 1 || (root->right == nullptr && root->left == nullptr)) {
+		return nullptr;
+	}
+	getDeepestEvenParent(root, rez);
+
+	return rez;
+}
+
+void BSTreeInt::getDeepestEvenParent(BSTNodeInt* root, BSTNodeInt*& rez)
+{
+	QueueAsArrayBSTNodeInt q(numOfElements);
+	BSTNodeInt* ptr = nullptr;
+	q.enqueue(root);
+	int depth = 0;
+	int maxdepth = 0;
+	int nodesincurrentlevel = 1;
+	int nodesinnextlevel = 0;
+	while (!q.isEmpty()) {
+		for (int i = 0; i < nodesincurrentlevel; i++) {
+			ptr = q.dequeue();
+			if (ptr->getKey() % 2 == 0 && (ptr->right != nullptr || ptr->left != nullptr) && depth >= maxdepth) {
+				maxdepth = depth;
+				rez = ptr;
+			}
+
+			if (ptr->right) {
+				q.enqueue(ptr->right);
+				nodesinnextlevel++;
+			}
+			if (ptr->left) {
+				q.enqueue(ptr->left);
+				nodesinnextlevel++;
+			}
+		
+		}
+		depth++;
+		nodesincurrentlevel = nodesinnextlevel;
+		nodesinnextlevel = 0;
+	}
+
+}
+
+

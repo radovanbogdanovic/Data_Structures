@@ -36,12 +36,20 @@ private:
 public:
 	long depthFirstTraversalRecursive(const int& data) const;
 
-	long topologicalOrderTravrsal() const;
 
-	void cycleThroughTwoNodes(int data1, int data2);
 	bool arePathsPossible(LinkedNodeInt* start, LinkedNodeInt* goal1, LinkedNodeInt* goal2, LinkedNodeInt* mid) const;
 	void deorientation();
 	int printMaxConnectedComponentNodes();
 	int* defineOrder(int* dep, int n);
+
+	int countSafeNodes() const;
+	bool isSafe(LinkedNodeInt* ptr) const;
+
+	long topologicalOrderTravrsal() const;
+
+	int whichOneIsCloser(int a, int b, int c) const;
+	void ensureEdgeExists(int b, int c);
+	LinkedNodeInt* FindStation(int s, int g1, int g2, int& noInter);
+	bool pathGoesThrough(int a, int b, int c);
 };
 
